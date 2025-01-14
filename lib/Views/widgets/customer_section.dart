@@ -1,18 +1,18 @@
-import 'package:dashboard/Controllers/orders_controller.dart';
+import 'package:dashboard/Controllers/customer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OrderSection extends StatefulWidget {
-  const OrderSection({super.key});
+class CustomerSection extends StatefulWidget {
+  const CustomerSection({super.key});
 
   @override
-  State<OrderSection> createState() => _OrderSectionState();
+  State<CustomerSection> createState() => _CustomerSectionState();
 }
 
-class _OrderSectionState extends State<OrderSection> {
-  final OrdersController controller = Get.put(OrdersController());
+class _CustomerSectionState extends State<CustomerSection> {
+  final CustomerController controller = Get.put(CustomerController());
   bool _ascendding = true;
-  String _sortColumn = 'orderId';
+  String _sortColumn = 'customerId';
   TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _OrderSectionState extends State<OrderSection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Orders Overview',
+              'Customer  Overview',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -48,13 +48,13 @@ class _OrderSectionState extends State<OrderSection> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildCard("Total Orders", "5000", Icons.list_alt, Colors.blueAccent),
-        _buildCard("Delivered Orders", "300", Icons.check_circle, Colors.greenAccent),
-        _buildCard("Pending Orders", "30", Icons.new_releases, Colors.orangeAccent),
-        _buildCard("Cancelled Orders", "20", Icons.category, Colors.redAccent),
+        _buildCard("Total Customer ", "100", Icons.people, Colors.blueAccent),
+        _buildCard("Active Customer", "800", Icons.check_circle, Colors.greenAccent),
+        _buildCard("Inactive Customers", "150", Icons.block, Colors.greenAccent),
+        _buildCard("New Customer", "20", Icons.person_add, Colors.orange),
       ],
     );
-  }
+  } 
 
   Widget _buildCard(String title, String value, IconData icon, Color color) {
     return Expanded(
@@ -124,7 +124,7 @@ class _OrderSectionState extends State<OrderSection> {
               controller: _searchController,
               onChanged: (value) => setState(() {}),
               decoration: InputDecoration(
-                hintText: 'Search Orders',
+                hintText: 'Search Customers', 
                 prefixIcon: Icon(
                   Icons.search,
                   color: Colors.grey,
@@ -138,7 +138,6 @@ class _OrderSectionState extends State<OrderSection> {
               ),
             ),
           ),
-         
         ],
       ),
     );
@@ -177,18 +176,18 @@ class _OrderSectionState extends State<OrderSection> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 sortColumnIndex: [
-                  'orderId',
-                  'custometName',
+                  'customerId',
+                  'customerName',
                   'totalAmount',
                   'orderDate',
                   'status',
                 ].indexOf(_sortColumn),
                 sortAscending: _ascendding,
                 columns: [
-                  _builderDataColumn("Order Id", 'orderId'),
-                  _builderDataColumn("Customer Name", 'customerName'),
-                  _builderDataColumn("Total Amount", 'totalAmount', numeric: true),
-                  _builderDataColumn("Order Date", 'priTotlalce'),
+                  _builderDataColumn("Customer ID", 'orderId'),
+                  _builderDataColumn("CustomerName", 'customerName'),
+                  _builderDataColumn("Email", 'email'),
+                  _builderDataColumn("Total Orders", 'totalOrders'),
                   _builderDataColumn("Status", 'status'),
                 ],
                 rows: data.map((iteme) => _buildDataRow(iteme)).toList(),
@@ -213,10 +212,10 @@ class _OrderSectionState extends State<OrderSection> {
 
   DataRow _buildDataRow(Map<String, dynamic> item) {
     return DataRow(cells: [
-      DataCell(Text(item['orderId']?.toString() ?? "N/A")),
+      DataCell(Text(item['customerId']?.toString() ?? "N/A")),
       DataCell(Text(item['customerName']?.toString() ?? "N/A")),
-      DataCell(Text(item['totalAmount']?.toString() ?? "N/A")),
-      DataCell(Text(item['orderDate']?.toString() ?? "N/A")),
+      DataCell(Text(item['email']?.toString() ?? "N/A")),
+      DataCell(Text(item['totlaOrders']?.toString() ?? "N/A")),
       DataCell(Text(item['status']?.toString() ?? "N/A")),
     ]);
   }
@@ -225,7 +224,6 @@ class _OrderSectionState extends State<OrderSection> {
     String searchText = _searchController.text.toLowerCase();
 
     return data.where((item) {
-      
       if (searchText.isNotEmpty &&
           !item['customerName'].toLowerCase().contains(searchText)) {
         return false;
@@ -234,16 +232,16 @@ class _OrderSectionState extends State<OrderSection> {
     }).toList();
   }
 
-  Widget   _buildPageination() {
+  Widget _buildPageination() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text("1-50 of 500 orders"),
+        Text("1-30 of 200 customer"),
         SizedBox(width: 16),
         IconButton(
           onPressed: () {},
           icon: Icon(Icons.chevron_left),
-          color: Colors.grey,
+          color: Colors.grey, 
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -251,6 +249,7 @@ class _OrderSectionState extends State<OrderSection> {
             color: Colors.redAccent,
             borderRadius: BorderRadius.circular(4),
           ),
+          child: Text('1'), 
         ),
         IconButton(
           onPressed: () {},

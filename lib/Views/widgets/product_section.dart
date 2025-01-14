@@ -12,7 +12,7 @@ class ProductSection extends StatefulWidget {
 class _ProductSectionState extends State<ProductSection> {
   final ProductController controller = Get.put(ProductController());
   bool _ascendding = true;
-  String _sortColumn = 'product';
+  String _sortColumn = 'productName';
   String _filterCategory = 'All';
   TextEditingController _searchController = TextEditingController();
   @override
@@ -52,7 +52,7 @@ class _ProductSectionState extends State<ProductSection> {
         _buildCard("Total Products", "5000", Icons.inventory, Colors.orange),
         _buildCard("Out of stock", "500", Icons.warning, Colors.redAccent),
         _buildCard("New Products", "30", Icons.new_releases, Colors.blueAccent),
-        _buildCard("Catefories", "20", Icons.category, Colors.greenAccent),
+        _buildCard("Categories", "20", Icons.category, Colors.greenAccent),
       ],
     );
   }
@@ -86,7 +86,7 @@ class _ProductSectionState extends State<ProductSection> {
                 ],
               ),
               SizedBox(
-                width: 10,
+                height: 10,
               ),
               Text(
                 value,
@@ -210,11 +210,11 @@ class _ProductSectionState extends State<ProductSection> {
                 ].indexOf(_sortColumn),
                 sortAscending: _ascendding,
                 columns: [
-                  _builderDataColumn("ProductName", 'productName'),
+                  _builderDataColumn("Product Name", 'productName'),
                   _builderDataColumn("Category", 'category'),
                   _builderDataColumn("Stock", 'stock', numeric: true),
                   _builderDataColumn("Price", 'price', numeric: true),
-                  _builderDataColumn("SKU", 'sku', numeric: true),
+                  _builderDataColumn("SKU", 'sku'),
                 ],
                 rows: data.map((iteme) => _buildDataRow(iteme)).toList(),
               ),
@@ -241,7 +241,7 @@ class _ProductSectionState extends State<ProductSection> {
       DataCell(Text(item['productName']?.toString() ?? "N/A")),
       DataCell(Text(item['category']?.toString() ?? "N/A")),
       DataCell(Text(item['stock']?.toString() ?? "N/A")),
-      DataCell(Text(item['cprice']?.toString() ?? "N/A")),
+      DataCell(Text(item['price']?.toString() ?? "N/A")),
       DataCell(Text(item['sku']?.toString() ?? "N/A")),
     ]);
   }

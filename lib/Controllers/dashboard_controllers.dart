@@ -13,7 +13,7 @@ class DashboardController extends GetxController {
   final RxBool sidebarOpen = true.obs;
 
   final RxList<SectionModel> sections = <SectionModel>[
-    SectionModel(title: 'title', icon: Icons.show_chart),
+    SectionModel(title: 'Statistics', icon: Icons.show_chart),
     SectionModel(title: 'Products', icon: Icons.shopping_bag),
     SectionModel(title: 'Orders', icon: Icons.list_alt),
     SectionModel(title: 'Customers', icon: Icons.people),
